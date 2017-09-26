@@ -1,0 +1,2 @@
+pyTelegramBotAPI
+google-api-python-client
