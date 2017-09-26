@@ -20,11 +20,16 @@ if not calendar.has_events():
 
 print("Loading upcoming events...")
 
+upcoming_events = calendar.get_tomorrow_events()
+
+if len(upcoming_events) == 0:
+    print("No upcoming events.")
+    quit()
+
 messages = ""
 
-for event in calendar.get_upcoming_events(remaining_time=86400*2, min_difference=86400):
+for event in upcoming_events:
     message = event.message()
     messages += message + "\n\n"
 
-# CAMBIARE CHAT ID
 bot.send_message(0, messages, parse_mode='Markdown')
