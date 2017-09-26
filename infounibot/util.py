@@ -8,7 +8,7 @@ def add_id(id):
     ids = get_ids()
     found = False
     for idz in ids :
-        if(idz == ([str(id)]) ):
+        if(idz == id ):
             found = True
             break
     if not found:
@@ -22,7 +22,7 @@ def get_ids():
     reader = csv.reader(file)
     data = []
     for row in reader :
-        data.append(row)
+        data.append(int(row[0]))
     file.close()
     return data
 
@@ -31,6 +31,6 @@ def remove_id(del_id):
     file = open(path ,"w")
     writer = csv.writer(file)
     for id in ids:
-        if(id != [str(del_id)]):
-            writer.writerow(id)
+        if(id != del_id):
+            writer.writerow([id])
     file.close()
