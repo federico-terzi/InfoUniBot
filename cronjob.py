@@ -32,4 +32,4 @@ for event in upcoming_events:
     message = event.message()
     messages += message + "\n\n"
 
-bot.send_message(0, messages, parse_mode='Markdown')
+bot.send_message(298233140, messages, parse_mode='Markdown')

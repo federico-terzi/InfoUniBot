@@ -1,8 +1,11 @@
 import telepot
 from telepot.loop import MessageLoop
 import time
+import os
 import csv
 
+# Get the bot token fron the enviromental variables
+BOT_TOKEN = os.environ["bot_token"]
 
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
@@ -32,15 +35,7 @@ def handle(msg):
 
 
 
-
-
-
-
-token = '476538995:AAHelMdFw_UZI_e_AceSpAvtV3hZKvEq9OE'
-
-bot = telepot.Bot(token)
-
-
+bot = telepot.Bot(BOT_TOKEN)
 
 str_welcome = 'Benvenuto nel fantastico UniBot'
 
