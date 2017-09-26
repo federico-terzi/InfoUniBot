@@ -1,3 +1,4 @@
+# coding=utf-8
 import telepot
 from telepot.loop import MessageLoop
 import time
