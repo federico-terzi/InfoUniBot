@@ -5,10 +5,17 @@ home_dir = os.path.expanduser('~')
 path = os.path.join(home_dir,'ids.txt')
 
 def add_id(id):
-    file = open(path,"a")
-    writer = csv.writer(file)
-    writer.writerow([id])
-    file.close()
+    ids = get_ids()
+    found = False
+    for idz in ids :
+        if(idz == ([str(id)]) ):
+            found = True
+            break
+    if not found:
+        file = open(path,"a")
+        writer = csv.writer(file)
+        writer.writerow([id])
+        file.close()
 
 def get_ids():
     file = open(path,"r")
@@ -27,9 +34,3 @@ def remove_id(del_id):
         if(id != [str(del_id)]):
             writer.writerow(id)
     file.close()
-
-add_id(123456)
-add_id(123457)
-add_id(123458)
-remove_id(123456)
-print(get_ids())
