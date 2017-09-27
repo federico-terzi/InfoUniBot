@@ -3,11 +3,19 @@ import telebot
 import os
 import infounibot.util as util
 import infounibot.google_cal as cal
+from telebot import types
 
 
 # Get the bot token fron the enviromental variables
 BOT_TOKEN = os.environ["bot_token"]
 bot = telebot.TeleBot(BOT_TOKEN)
+
+
+markup = types.ReplyKeyboardMarkup(row_width=2)
+itembtn2 = types.KeyboardButton('/domani')
+markup.add(itembtn2)
+
+
 
 str_welcome = 'Benvenuto nel fantastico UniBot'
 
@@ -16,7 +24,7 @@ def subscribe(message):
     id = message.chat.id
     print(str(id))
     util.add_id(id)
-    bot.reply_to(message,str_welcome)
+    bot.send_message(message.chat.id,str_welcome,reply_markup=markup)
 
 @bot.message_handler(commands=['stop','Stop'])
 def unsub(message):
