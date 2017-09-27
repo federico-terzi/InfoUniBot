@@ -30,7 +30,7 @@ def send_tomorrow(message):
     calendar.load_events()
     text = calendar.get_tomorrow_message()
     print(str(text))
-    bot.send_message(message.chat.id,text)
+    bot.send_message(message.chat.id, text, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
 print("Polling...")
 
