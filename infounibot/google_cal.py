@@ -1,7 +1,8 @@
 from __future__ import print_function
+import calendar
 import datetime, time
 import hashlib
-
+import pytz
 import dateutil.parser
 import httplib2
 from googleapiclient import discovery
@@ -48,13 +49,13 @@ class CalendarReader(object):
             start_string = event.get('start')['dateTime']
             start = -1  # If there was an error, this remains to -1
             if start_string:
-                start = time.mktime(dateutil.parser.parse(start_string).timetuple())
+                start = calendar.timegm(dateutil.parser.parse(start_string).timetuple())
 
             # Convert the end date to an int timestamp
             end_string = event.get('end')['dateTime']
             end = -1  # If there was an error, this remains to -1
             if end_string:
-                end = time.mktime(dateutil.parser.parse(end_string).timetuple())
+                end = calendar.timegm(dateutil.parser.parse(end_string).timetuple())
 
             # Create the calendar event
             calendar_event = CalendarEvent(name=name, place=place, start=start,
@@ -152,13 +153,15 @@ class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "descr
 
     def get_start_date(self):
         if self.start > 0:
-            return datetime.datetime.fromtimestamp(self.start)
+            date = datetime.datetime.utcfromtimestamp(self.start)
+            return date
         else:
             return None
 
     def get_end_date(self):
         if self.end > 0:
-            return datetime.datetime.fromtimestamp(self.end)
+            date = datetime.datetime.utcfromtimestamp(self.end)
+            return date
         else:
             return None
 

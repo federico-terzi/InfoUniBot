@@ -1,3 +1,0 @@
-telebot
-pyTelegramBotAPI
-google-api-python-client
