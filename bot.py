@@ -24,17 +24,12 @@ Puoi disabilitare le notifiche in qualunque momento digitando:
 Grazie e a presto! :)
 """
 
-link_controlli = "https://mega.nz/#!9BdSxDia!ZnB6JsPyz7Ao1Oc4gzeZf3m8WtW8VTA6P4oZMM1gjkQ"
 
 markup = types.ReplyKeyboardMarkup(row_width=2)
 
 itembtn1 = types.KeyboardButton('/domani')
 itembtn2 = types.KeyboardButton('/oggi')
 markup.add(itembtn1, itembtn2)
-
-@bot.message_handler(commands=['controlli','Controlli'])
-def get_controlli(message):
-    bot.replay_to(message,link_controlli)
 
 
 @bot.message_handler(commands=['start','Start'])
