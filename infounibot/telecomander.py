@@ -21,15 +21,20 @@ def list_avvisi():
 def elimina_avviso(number):
     list = list_avvisi()
     i = 0
+    print(str(list))
     file = open(path, "w")
     csv_writer = csv.writer(file)
     if(number>0):
-        for el in list:
-            if(i != number-1):
-                csv_writer.writerow(el)
-                i+=1
+        list.pop(number-1)
+    for el in list:
+        csv_writer.writerow(el)
     file.close()
 
 home_dir = os.path.expanduser('~')
 path = os.path.join(home_dir,'avvisi.txt')
 
+scriviAvviso('merda')
+scriviAvviso('cavolo')
+scriviAvviso('shit')
+elimina_avviso(2)
+print(str(list_avvisi()))
