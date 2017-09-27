@@ -3,7 +3,7 @@ import telebot
 import os
 import infounibot.util as util
 import infounibot.google_cal as cal
-
+from telebot import types
 
 # Get the bot token fron the enviromental variables
 BOT_TOKEN = os.environ["bot_token"]
@@ -22,6 +22,11 @@ Puoi disabilitare le notifiche in qualunque momento digitando:
 
 Grazie e a presto! :)
 """
+
+markup = types.ReplyKeyboardMarkup(row_width=2)
+itembtn2 = types.KeyboardButton('/domani')
+markup.add(itembtn2)
+
 
 @bot.message_handler(commands=['start','Start'])
 def subscribe(message):
