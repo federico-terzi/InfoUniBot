@@ -113,15 +113,16 @@ class CalendarReader(object):
         """
         upcoming_events = self.get_tomorrow_events()
 
-        messages = ""
-
         if len(upcoming_events) == 0:
-            messages = "No events for tomorrow."
-            return messages
+            return "No events for tomorrow."
+
+        messages = []
 
         for event in upcoming_events:
             message = event.message()
-            messages += message + "\n\n"
+            messages.append(message)
+
+        return '\n\n'.join(messages)
 
 
 class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "description"])):

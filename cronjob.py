@@ -1,4 +1,7 @@
+from __future__ import print_function
 import telebot, os
+
+from infounibot import util
 from infounibot.google_cal import CalendarReader
 
 # Get the bot token fron the enviromental variables
@@ -20,16 +23,12 @@ if not calendar.has_events():
 
 print("Loading upcoming events...")
 
-upcoming_events = calendar.get_tomorrow_events()
+message = calendar.get_tomorrow_message()
 
-if len(upcoming_events) == 0:
-    print("No upcoming events.")
-    quit()
+ids = util.get_ids()
 
-messages = ""
+print("Sending message to subscribers:", len(ids))
 
-for event in upcoming_events:
-    message = event.message()
-    messages += message + "\n\n"
-
-bot.send_message(298233140, messages, parse_mode='Markdown')
+for id in ids:
+    print("Sending to:", id)
+    bot.send_message(id, message, parse_mode='Markdown')
