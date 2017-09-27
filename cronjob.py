@@ -39,7 +39,7 @@ mh = MessageHandler()
 if now.hour == NOTIFY_TOMORROW_EVENTS_HOUR:
     print("Loading tomorrow events...")
 
-    event_message, message_id = calendar.get_tomorrow_message
+    event_message, message_id = calendar.get_tomorrow_message()
 
     # Verifica che ci siano eventi per domani
     if message_id is not None:
