@@ -107,6 +107,12 @@ class CalendarReader(object):
         """
         return self.get_upcoming_events(remaining_time=86400)
 
+    def get_today_events(self):
+        """
+        Get the events within 10 hours
+        """
+        return self.get_upcoming_events(remaining_time=36400)
+
     def get_week_events(self):
         """
         Get the events within 7 days
@@ -121,7 +127,27 @@ class CalendarReader(object):
         upcoming_events = self.get_tomorrow_events()
 
         if len(upcoming_events) == 0:
-            return "No events for tomorrow.", None
+            return "Nessun evento per domani.", None
+
+        event_hash = self.calculate_events_hash(upcoming_events)
+
+        messages = []
+
+        for event in upcoming_events:
+            message = event.message()
+            messages.append(message)
+
+        return '\n\n'.join(messages), event_hash
+
+    def get_today_message(self):
+        """
+        Return a formatted message with the today events
+        and the message ID
+        """
+        upcoming_events = self.get_today_events()
+
+        if len(upcoming_events) == 0:
+            return "Nessun evento per oggi.", None
 
         event_hash = self.calculate_events_hash(upcoming_events)
 
