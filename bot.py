@@ -9,14 +9,26 @@ import infounibot.google_cal as cal
 BOT_TOKEN = os.environ["bot_token"]
 bot = telebot.TeleBot(BOT_TOKEN)
 
-str_welcome = 'Benvenuto nel fantastico UniBot'
+str_welcome = """Benvenuto nel fantastico *UniBot*! 🎉
+
+Ti terrò informato di tutte le lezioni, gli esami e gli avvisi.
+
+Se hai bisogno di informazioni, puoi anche chiedermele liberamente! Questi sono i comandi a disposizione:
+
+/domani permette di vedere le lezioni di domani.
+
+Puoi disabilitare le notifiche in qualunque momento digitando: 
+/stop
+
+Grazie e a presto! :)
+"""
 
 @bot.message_handler(commands=['start','Start'])
 def subscribe(message):
     id = message.chat.id
     print(str(id))
     util.add_id(id)
-    bot.reply_to(message,str_welcome)
+    bot.send_message(message,str_welcome, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
 @bot.message_handler(commands=['stop','Stop'])
 def unsub(message):
