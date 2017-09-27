@@ -13,7 +13,7 @@ str_welcome = """Benvenuto nel fantastico *UniBot*! 🎉
 
 Ti terrò informato di tutte le lezioni, gli esami e gli avvisi.
 
-Se hai bisogno di informazioni, puoi anche chiedermele liberamente! Questi sono i comandi a disposizione:
+Se hai bisogno di informazioni, puoi chiedermele quando vuoi con questi comandi:
 
 /domani permette di vedere le lezioni di domani.
 
