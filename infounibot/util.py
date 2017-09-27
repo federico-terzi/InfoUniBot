@@ -21,7 +21,7 @@ def get_ids():
     try:
         file = open(path,"r")
     except IOError:
-        return ""
+        return []  # Modificato per restituire lista vuota, più comoda così non serve fare un controllo prima
     reader = csv.reader(file)
     data = []
     for row in reader :
