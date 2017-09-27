@@ -37,7 +37,7 @@ def subscribe(message):
     id = message.chat.id
     print(str(id))
     util.add_id(id)
-    bot.send_message(id, str_welcome, reply_markup=markup, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
+    bot.send_message(id, str_welcome, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
 @bot.message_handler(commands=['stop','Stop'])
 def unsub(message):
