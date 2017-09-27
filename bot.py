@@ -23,6 +23,7 @@ Puoi disabilitare le notifiche in qualunque momento digitando:
 Grazie e a presto! :)
 """
 
+
 markup = types.ReplyKeyboardMarkup(row_width=2)
 itembtn1 = types.KeyboardButton('/stop')
 itembtn2 = types.KeyboardButton('/domani')
@@ -34,7 +35,7 @@ def subscribe(message):
     id = message.chat.id
     print(str(id))
     util.add_id(id)
-    bot.send_message(id, str_welcome, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
+    bot.send_message(id, str_welcome,reply_markup=markup,parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
 @bot.message_handler(commands=['stop','Stop'])
 def unsub(message):
@@ -48,7 +49,7 @@ def send_tomorrow(message):
     calendar.load_events()
     text = calendar.get_tomorrow_message()
     print(str(text))
-    bot.send_message(message.chat.id, text, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
+    bot.send_message(message.chat.id, text,reply_markup=markup ,parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
 print("Polling...")
 
