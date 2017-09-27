@@ -18,7 +18,10 @@ def add_id(id):
         file.close()
 
 def get_ids():
-    file = open(path,"r")
+    try:
+        file = open(path,"r")
+    except IOError:
+        return []  # Modificato per restituire lista vuota, più comoda così non serve fare un controllo prima
     reader = csv.reader(file)
     data = []
     for row in reader :
@@ -34,3 +37,4 @@ def remove_id(del_id):
         if(id != del_id):
             writer.writerow([id])
     file.close()
+    
