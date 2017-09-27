@@ -1,6 +1,9 @@
 # coding=utf-8
 import telebot
 import os
+
+import time
+
 import infounibot.util as util
 import infounibot.google_cal as cal
 from telebot import types
@@ -61,6 +64,18 @@ def send_today(message):
     print(str(text))
     bot.send_message(message.chat.id, text, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
-print("Polling...")
 
-bot.polling(none_stop=True)
+# Eseguo il polling, con recupero in caso di errore
+def telegram_polling():
+    print("Polling...")
+    try:
+        bot.polling(none_stop=True)
+    except Exception as e:
+        print(e)
+        bot.stop_polling()
+        time.sleep(5)
+        telegram_polling()
+
+
+if __name__ == '__main__':
+    telegram_polling()
