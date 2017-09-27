@@ -120,6 +120,7 @@ class CalendarReader(object):
         """
         return self.get_upcoming_events(remaining_time=86400*7)
 
+    @property
     def get_tomorrow_message(self):
         """
         Return a formatted message with the tomorrow events
@@ -129,6 +130,7 @@ class CalendarReader(object):
 
         if len(upcoming_events) == 0:
             return "Nessun evento per domani.", None
+
 
         event_hash = self.calculate_events_hash(upcoming_events)
 
@@ -144,7 +146,7 @@ class CalendarReader(object):
         """
         Return the message with a bit of header
         """
-        message, event_id = self.get_tomorrow_message()
+        message, event_id = self.get_tomorrow_message
         final_message = """
 Domani avrai queste lezioni:
 
@@ -193,7 +195,7 @@ PS: è un pò tardi per chiederlo 😂
         ids = map(lambda x: x.id, events)
         total_id = "".join(ids)
         m = hashlib.md5()
-        m.update(total_id)
+        m.update(total_id.encode('utf-8'))
         return m.hexdigest()
 
 

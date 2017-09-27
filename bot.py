@@ -1,7 +1,7 @@
 # coding=utf-8
 import telebot
 import os
-import infounibot.util as util
+import infounibot.util as csv_util
 import infounibot.google_cal as cal
 from telebot import types
 
@@ -36,13 +36,13 @@ markup.add(itembtn1, itembtn2)
 def subscribe(message):
     id = message.chat.id
     print(str(id))
-    util.add_id(id)
+    csv_util.add_id(id)
     bot.send_message(id, str_welcome, reply_markup=markup, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
 @bot.message_handler(commands=['stop','Stop'])
 def unsub(message):
     id = message.chat.id
-    util.remove_id(id)
+    csv_util.remove_id(id)
     bot.reply_to(message,"Non riceverai più nessuna notifica.\n Grazie e alla prossima volta!.")
 
 @bot.message_handler(commands=['domani','Domani'])
