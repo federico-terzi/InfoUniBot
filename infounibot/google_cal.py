@@ -1,3 +1,4 @@
+# coding=utf-8
 from __future__ import print_function
 import calendar
 import datetime, time
@@ -139,6 +140,20 @@ class CalendarReader(object):
 
         return '\n\n'.join(messages), event_hash
 
+    def get_tomorrow_full_message(self):
+        """
+        Return the message with a bit of header
+        """
+        message, event_id = self.get_tomorrow_message()
+        final_message = """
+Domani avrai queste lezioni:
+
+{lezioni}
+
+Spero di essere stato utile 😎
+        """.format(lezioni=message)
+        return final_message, event_id
+
     def get_today_message(self):
         """
         Return a formatted message with the today events
@@ -158,6 +173,20 @@ class CalendarReader(object):
             messages.append(message)
 
         return '\n\n'.join(messages), event_hash
+
+    def get_today_full_message(self):
+            """
+            Return the message with a bit of header
+            """
+            message, event_id = self.get_tomorrow_message()
+            final_message = """
+    Oggi ti rimangono queste lezioni:
+
+    {lezioni}
+
+    PS: è un pò tardi per chiederlo 😂
+            """.format(lezioni=message)
+            return final_message, event_id
 
     @staticmethod
     def calculate_events_hash(events):
