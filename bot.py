@@ -3,6 +3,7 @@ import telebot
 import os
 import infounibot.util as util
 import infounibot.google_cal as cal
+import infounibot.telecomander as tc
 from telebot import types
 
 # Get the bot token fron the enviromental variables
@@ -30,6 +31,17 @@ markup = types.ReplyKeyboardMarkup(row_width=2)
 itembtn1 = types.KeyboardButton('/domani')
 itembtn2 = types.KeyboardButton('/oggi')
 markup.add(itembtn1, itembtn2)
+
+@bot.message_handler(commands=['addA','AddA'])
+def inserisci_avviso(message):
+    text = message.chat.text # (?)
+    if(message.chat.id == 0):#inseriremo i nostri ID manualmente , purtroppo
+        tc.scriviAvviso(text)
+@bot.message_handler(commands=['rmA','RmA'])
+def elimina_avviso(message):
+    text = int(message.chat.text)
+    if(message.chat.id ==0):
+        tc.elimina_avviso(text)
 
 
 @bot.message_handler(commands=['start','Start'])
