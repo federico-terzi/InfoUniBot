@@ -16,6 +16,7 @@ Ti terrò informato di tutte le lezioni, gli esami e gli avvisi.
 Se hai bisogno di informazioni, puoi chiedermele quando vuoi con questi comandi:
 
 /domani permette di vedere le lezioni di domani.
+/oggi permette di vedere le lezioni rimaste di oggi.
 
 Puoi disabilitare le notifiche in qualunque momento digitando: 
 /stop
@@ -47,9 +48,17 @@ def unsub(message):
 def send_tomorrow(message):
     calendar = cal.CalendarReader()
     calendar.load_events()
-    text = calendar.get_tomorrow_message()
+    text = calendar.get_tomorrow_full_message()
     print(str(text))
-    bot.send_message(message.chat.id, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
+    bot.send_message(message.chat.id, text, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
+
+@bot.message_handler(commands=['oggi', 'Oggi'])
+def send_today(message):
+    calendar = cal.CalendarReader()
+    calendar.load_events()
+    text = calendar.get_today_full_message()
+    print(str(text))
+    bot.send_message(message.chat.id, text, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
 print("Polling...")
 

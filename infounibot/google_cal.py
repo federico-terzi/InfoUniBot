@@ -180,11 +180,11 @@ Spero di essere stato utile 😎
             """
             message, event_id = self.get_tomorrow_message()
             final_message = """
-    Oggi ti rimangono queste lezioni:
+Oggi ti rimangono queste lezioni:
 
-    {lezioni}
+{lezioni}
 
-    PS: è un pò tardi per chiederlo 😂
+PS: è un pò tardi per chiederlo 😂
             """.format(lezioni=message)
             return final_message, event_id
 
