@@ -178,7 +178,7 @@ Spero di essere stato utile 😎
             """
             Return the message with a bit of header
             """
-            message, event_id = self.get_tomorrow_message()
+            message, event_id = self.get_today_message()
             final_message = """
 Oggi ti rimangono queste lezioni:
 
