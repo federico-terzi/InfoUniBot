@@ -25,9 +25,9 @@ Grazie e a presto! :)
 
 
 markup = types.ReplyKeyboardMarkup(row_width=2)
-itembtn1 = types.KeyboardButton('/stop')
+
 itembtn2 = types.KeyboardButton('/domani')
-markup.add(itembtn1,itembtn2)
+markup.add(itembtn2)
 
 
 @bot.message_handler(commands=['start','Start'])
