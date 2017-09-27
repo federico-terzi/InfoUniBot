@@ -1,5 +1,7 @@
 from __future__ import print_function
 import datetime, time
+import hashlib
+
 import dateutil.parser
 import httplib2
 from googleapiclient import discovery
@@ -113,11 +115,14 @@ class CalendarReader(object):
     def get_tomorrow_message(self):
         """
         Return a formatted message with the tomorrow events
+        and the message ID
         """
         upcoming_events = self.get_tomorrow_events()
 
         if len(upcoming_events) == 0:
-            return "No events for tomorrow."
+            return "No events for tomorrow.", None
+
+        event_hash = self.calculate_events_hash(upcoming_events)
 
         messages = []
 
@@ -125,7 +130,15 @@ class CalendarReader(object):
             message = event.message()
             messages.append(message)
 
-        return '\n\n'.join(messages)
+        return '\n\n'.join(messages), event_hash
+
+    @staticmethod
+    def calculate_events_hash(events):
+        ids = map(lambda x: x.id, events)
+        total_id = "".join(ids)
+        m = hashlib.md5()
+        m.update(total_id)
+        return m.hexdigest()
 
 
 class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "description", "id"])):
