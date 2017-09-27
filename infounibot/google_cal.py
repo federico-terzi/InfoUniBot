@@ -4,6 +4,7 @@ import dateutil.parser
 import httplib2
 from googleapiclient import discovery
 from collections import namedtuple
+import os
 
 from infounibot.google_api import get_credentials
 
@@ -39,6 +40,7 @@ class CalendarReader(object):
             name = event.get('summary')
             place = event.get('location')
             description = event.get('description')
+            event_id = event.get('id')
 
             # Convert the start date to an int timestamp
             start_string = event.get('start')['dateTime']
@@ -54,7 +56,8 @@ class CalendarReader(object):
 
             # Create the calendar event
             calendar_event = CalendarEvent(name=name, place=place, start=start,
-                                           end=end, description=description)
+                                           end=end, description=description,
+                                           id=event_id)
 
             # Add the event to the final list
             output.append(calendar_event)
@@ -125,7 +128,7 @@ class CalendarReader(object):
         return '\n\n'.join(messages)
 
 
-class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "description"])):
+class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "description", "id"])):
     def message(self):
         event_time = CalendarEvent.get_formatted_time(self.get_start_date(), self.get_end_date())
 
