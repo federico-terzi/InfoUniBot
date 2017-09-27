@@ -107,6 +107,22 @@ class CalendarReader(object):
         """
         return self.get_upcoming_events(remaining_time=86400*7)
 
+    def get_tomorrow_message(self):
+        """
+        Return a formatted message with the tomorrow events
+        """
+        upcoming_events = self.get_tomorrow_events()
+
+        messages = ""
+
+        if len(upcoming_events) == 0:
+            messages = "No events for tomorrow."
+            return messages
+
+        for event in upcoming_events:
+            message = event.message()
+            messages += message + "\n\n"
+
 
 class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "description"])):
     def message(self):
