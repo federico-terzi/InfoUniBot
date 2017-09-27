@@ -146,7 +146,7 @@ class CalendarReader(object):
         """
         Return the message with a bit of header
         """
-        message, event_id = self.get_tomorrow_message()
+        message, event_id = self.get_tomorrow_message
         final_message = """
 Domani avrai queste lezioni:
 
