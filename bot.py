@@ -72,4 +72,5 @@ def reset_cache(message):
 
 
 # Eseguo il polling, con recupero in caso di errore
-bot.polling(none_stop=True)
+bot.polling(none_stop=True, timeout=60)
+print("Polling...")
