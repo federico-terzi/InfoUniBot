@@ -54,6 +54,10 @@ class CalendarReader(object):
             print(e)
             return 0
 
+    def reset_event_cache(self):
+        # Delete cache file
+        os.remove(self.cache_path)
+
     def load_events(self):
         now = int(time.time())
         cache_timestamp = self.load_events_from_cache()

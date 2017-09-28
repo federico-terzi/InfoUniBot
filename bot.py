@@ -64,6 +64,12 @@ def send_today(message):
     print(str(text))
     bot.send_message(message.chat.id, text, parse_mode='Markdown')  # Serve ad aggiungere la formattazione tipo grassetto
 
+@bot.message_handler(commands=['resetcache'])
+def reset_cache(message):
+    calendar = cal.CalendarReader()
+    calendar.reset_event_cache()
+    bot.send_message(message.chat.id, "Cache Eventi resettata!", parse_mode='Markdown')
+
 
 # Eseguo il polling, con recupero in caso di errore
 bot.polling(none_stop=True)
