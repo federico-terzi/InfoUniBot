@@ -1,6 +1,11 @@
 import os
 import csv
 
+def formatta(testo):
+    testo=str(testo).upper().replace("[", "").replace("]", "").replace("'", "");
+    return testo
+
+
 def scriviAvviso(avviso):
     file = open(path, "a")
     csv_writer = csv.writer(file)
