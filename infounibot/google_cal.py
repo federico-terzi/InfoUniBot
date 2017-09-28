@@ -164,7 +164,6 @@ class CalendarReader(object):
         """
         return self.get_upcoming_events(remaining_time=86400*7)
 
-    @property
     def get_tomorrow_message(self):
         """
         Return a formatted message with the tomorrow events
@@ -174,7 +173,6 @@ class CalendarReader(object):
 
         if len(upcoming_events) == 0:
             return "Nessun evento per domani.", None
-
 
         event_hash = self.calculate_events_hash(upcoming_events)
 
@@ -190,7 +188,7 @@ class CalendarReader(object):
         """
         Return the message with a bit of header
         """
-        message, event_id = self.get_tomorrow_message
+        message, event_id = self.get_tomorrow_message()
         final_message = """
 Domani avrai queste lezioni:
 
