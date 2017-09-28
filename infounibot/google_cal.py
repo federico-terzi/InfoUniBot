@@ -52,6 +52,7 @@ class CalendarReader(object):
                 return json_input["timestamp"]
         except IOError as e:
             print(e)
+            return 0
 
     def load_events(self):
         now = int(time.time())
