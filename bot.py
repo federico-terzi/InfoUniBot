@@ -10,7 +10,7 @@ from telebot import types
 
 # Get the bot token fron the enviromental variables
 BOT_TOKEN = os.environ["bot_token"]
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.AsyncTeleBot(BOT_TOKEN)
 
 str_welcome = """Benvenuto nel fantastico *UniBot*! 🎉
 
