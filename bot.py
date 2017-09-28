@@ -41,7 +41,7 @@ def show_avvisi(message):
         text=text+("#"+str(i)+":"+str(avviso).replace("'","").upper()+"\n")
         i=i+1
 
-    bot.reply_to(message,text,parse_mode='Markdown')
+    bot.send_message(message.chat.id,text,parse_mode='Markdown')
 
 @bot.message_handler(commands=['addA','AddA'])
 def inserisci_avviso(message):
