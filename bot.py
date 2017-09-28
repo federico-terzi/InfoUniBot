@@ -32,6 +32,17 @@ itembtn1 = types.KeyboardButton('/domani')
 itembtn2 = types.KeyboardButton('/oggi')
 markup.add(itembtn1, itembtn2)
 
+@bot.message_handler(commands=['avvisi','Avvisi'])
+def show_avvisi(message):
+    text = 'AVVISI:\n'
+    i = 1
+    avvisi = tc.list_avvisi()
+    for avviso in avvisi:
+        text=text+("#"+str(i)+":"+str(avviso).replace("'","").upper()+"\n")
+        i=i+1
+
+    bot.reply_to(message,text,parse_mode='Markdown')
+
 @bot.message_handler(commands=['addA','AddA'])
 def inserisci_avviso(message):
     text = message.chat.text # (?)

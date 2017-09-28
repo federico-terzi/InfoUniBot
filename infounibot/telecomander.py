@@ -7,8 +7,6 @@ def scriviAvviso(avviso):
     csv_writer.writerow([avviso])
     file.close()
 
-
-
 def list_avvisi():
     file = open(path,"r")
     csv_reader = csv.reader(file)
@@ -32,9 +30,3 @@ def elimina_avviso(number):
 
 home_dir = os.path.expanduser('~')
 path = os.path.join(home_dir,'avvisi.txt')
-
-scriviAvviso('merda')
-scriviAvviso('cavolo')
-scriviAvviso('shit')
-elimina_avviso(2)
-print(str(list_avvisi()))
