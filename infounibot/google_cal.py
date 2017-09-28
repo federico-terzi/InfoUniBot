@@ -128,7 +128,7 @@ class CalendarReader(object):
         :return: a list of CalendarEvent
         """
         output = []
-        now_timestamp = time.mktime(datetime.datetime.now().timetuple())
+        now_timestamp = int(time.time())
 
         for event in self.events:
             # Calculate the amount of seconds that remain until the event
