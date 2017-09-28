@@ -1,13 +1,17 @@
 import os
 import csv
+import uuid
+
+
 
 def formatta(testo):
-    testo=str(testo).upper().replace("[", "").replace("]", "").replace("'", "");
+    testo=str(testo).upper().replace("[", "").replace("]", "").replace("'", "").replace('"','');
     return testo
 
 
 def scriviAvviso(avviso):
     file = open(path, "a")
+    avviso="{id}:{avviso}".format(id=uuid.uuid4(),avviso=avviso)
     csv_writer = csv.writer(file)
     csv_writer.writerow([avviso])
     file.close()
@@ -17,7 +21,9 @@ def list_avvisi():
     csv_reader = csv.reader(file)
     data = []
     for row in csv_reader:
-        data.append(row)
+        row = str(row).split(":")
+        d ={"id":row[0],'titolo':formatta(row[1]),'testo':formatta(row[2])}
+        data.append(d)
     file.close()
     return data
 
