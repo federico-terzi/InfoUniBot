@@ -37,11 +37,12 @@ def show_avvisi(message):
     text = 'AVVISI:\n'
     i = 1
     avvisi = tc.list_avvisi()
-
-    for avviso in avvisi:
-        text=text+("#{id}:*{titolo}*\n{avviso}").format(id=i,titolo=avviso['titolo'],avviso=avviso['testo'])
-        i=i+1
-
+    if(len(avvisi) != 0):
+        for avviso in avvisi:
+            text=text+("#{id}:*{titolo}*\n{avviso}").format(id=i,titolo=avviso['titolo'],avviso=avviso['testo'])
+            i=i+1
+    else:
+        text=text+"*Non ci sono nuovi avvisi*"
     bot.send_message(message.chat.id,text,parse_mode='Markdown')
 
 @bot.message_handler(commands=['addA','AddA'])
