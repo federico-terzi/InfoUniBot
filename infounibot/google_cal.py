@@ -153,15 +153,51 @@ class CalendarReader(object):
 
     def get_tomorrow_events(self):
         """
-        Get the events within 24 hours
+        Get the events of tomorrow
         """
-        return self.get_upcoming_events(remaining_time=86400)
+        output = []
+        now = datetime.datetime.utcnow()
+        today = (now.year-1)*365 + now.timetuple().tm_yday
+
+        for event in self.events:
+            event_date = event.get_start_date()
+            event_day = (event_date.year-1)*365 + event_date.timetuple().tm_yday
+
+            # If this is true, the event will be added
+            should_add = True
+
+            if (today+1) != event_day:
+                should_add = False
+
+            # Add to the list
+            if should_add:
+                output.append(event)
+
+        return output
 
     def get_today_events(self):
         """
-        Get the events within 10 hours
+        Get the today
         """
-        return self.get_upcoming_events(remaining_time=36400)
+        output = []
+        now = datetime.datetime.utcnow()
+        today = (now.year - 1) * 365 + now.timetuple().tm_yday
+
+        for event in self.events:
+            event_date = event.get_start_date()
+            event_day = (event_date.year - 1) * 365 + event_date.timetuple().tm_yday
+
+            # If this is true, the event will be added
+            should_add = True
+
+            if today != event_day:
+                should_add = False
+
+            # Add to the list
+            if should_add:
+                output.append(event)
+
+        return output
 
     def get_week_events(self):
         """
