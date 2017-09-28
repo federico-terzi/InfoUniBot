@@ -128,11 +128,11 @@ class CalendarReader(object):
         :return: a list of CalendarEvent
         """
         output = []
-        now_timestamp = time.mktime(datetime.datetime.now().timetuple())
+        now_timestamp = datetime.datetime.now()
 
         for event in self.events:
             # Calculate the amount of seconds that remain until the event
-            difference = event.start - now_timestamp
+            difference = (event.get_start_date() - now_timestamp).total_seconds()
 
             # If this is true, the event will be added
             should_add = True
@@ -286,10 +286,10 @@ class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "descr
     def message(self):
         event_time = CalendarEvent.get_formatted_time(self.get_start_date(), self.get_end_date())
 
-        return "*{name}*\n_{event_time}_\n\n{place}\n{description}".format(name=self.name,
-                                                                           place=self.place,
+        return "*{name}*\n_{event_time}_\n{place}{description}".format(name=self.name,
+                                                                           place=self.if_present(self.place),
                                                                            event_time=event_time,
-                                                                           description=self.description)
+                                                                           description=self.if_present(self.description))
 
     def get_start_date(self):
         if self.start > 0:
@@ -329,3 +329,10 @@ class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "descr
             return "{start_hour} - {end_hour}".format(start_hour=start_date.strftime("%H:%M"),
                                                       end_hour=end_date.strftime("%H:%M"),
                                                       )
+
+    @staticmethod
+    def if_present(string):
+        if string is None:
+            return ""
+        else:
+            return "\n" + string
