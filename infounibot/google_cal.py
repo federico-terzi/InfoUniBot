@@ -128,11 +128,11 @@ class CalendarReader(object):
         :return: a list of CalendarEvent
         """
         output = []
-        now_timestamp = int(time.time())
+        now_timestamp = datetime.datetime.now()
 
         for event in self.events:
             # Calculate the amount of seconds that remain until the event
-            difference = event.start - now_timestamp
+            difference = (event.get_start_date() - now_timestamp).total_seconds()
 
             # If this is true, the event will be added
             should_add = True

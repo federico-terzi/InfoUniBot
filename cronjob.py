@@ -45,11 +45,11 @@ upcoming_events = calendar.get_upcoming_events(remaining_time=NOTIFY_UPCOMING_EV
 
 for event in upcoming_events:
     message = """
-    Ciao! Ti ricordo tra poco iniziera' questa lezione:
+Ciao! Ti ricordo tra poco iniziera' questa lezione:
 
-    {lezione}
+{lezione}
 
-    Mi raccomando, arriva puntuale! :)
+Mi raccomando, arriva puntuale! :)
             """.format(lezione=event.message())
     for chat_id in ids:
         # Controllo che il messaggio non sia gia stato inviato all'utente
