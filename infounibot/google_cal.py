@@ -6,6 +6,7 @@ import hashlib
 import pytz
 import dateutil.parser
 import httplib2
+import json
 from googleapiclient import discovery
 from collections import namedtuple
 import os
@@ -14,8 +15,16 @@ from infounibot.google_api import get_credentials
 
 
 class CalendarReader(object):
-    def __init__(self):
+    def __init__(self, avoid_caching=False):
         self.events = []
+
+        self.MAX_CACHE_TIME = 3600  # One hour
+
+        # Genero il percorso del file
+        home_dir = os.path.expanduser('~')
+        self.cache_path = os.path.join(home_dir, 'events.txt')
+
+        self.avoid_caching = avoid_caching
 
     def has_events(self):
         """
@@ -23,7 +32,39 @@ class CalendarReader(object):
         """
         return len(self.events) > 0
 
+    def save_events_to_cache(self):
+        timestamp = int(time.time())
+        output = {
+            "timestamp": timestamp,
+            "events": map(lambda x: x.get_event_dict(), self.events)
+        }
+        # Save the file
+        with open(self.cache_path, "w") as f:
+            json.dump(output, f)
+
+    def load_events_from_cache(self):
+        # Open the file
+        try:
+            with open(self.cache_path, "r") as f:
+                json_input = json.load(f)
+                json_events = json_input["events"]
+                self.events = map(lambda x: CalendarEvent.from_dict(x), json_events)
+                return json_input["timestamp"]
+        except IOError as e:
+            print(e)
+
     def load_events(self):
+        now = int(time.time())
+        cache_timestamp = self.load_events_from_cache()
+
+        # Check if should request from google api
+        if self.avoid_caching or (now - cache_timestamp) > self.MAX_CACHE_TIME:
+            self.request_events()
+            print("Loaded from Google API.")
+        else:
+            print("Loaded from cache.")
+
+    def request_events(self):
         # Get the credentials and login into google
         credentials = get_credentials()
         http = credentials.authorize(httplib2.Http())
@@ -70,6 +111,9 @@ class CalendarReader(object):
         output.sort(key=lambda x: x.start)
 
         self.events = output
+
+        # Save the events to cache
+        self.save_events_to_cache()
 
     def get_upcoming_events(self, remaining_time=86400, min_difference=0):
         """
@@ -120,7 +164,6 @@ class CalendarReader(object):
         """
         return self.get_upcoming_events(remaining_time=86400*7)
 
-    @property
     def get_tomorrow_message(self):
         """
         Return a formatted message with the tomorrow events
@@ -130,7 +173,6 @@ class CalendarReader(object):
 
         if len(upcoming_events) == 0:
             return "Nessun evento per domani.", None
-
 
         event_hash = self.calculate_events_hash(upcoming_events)
 
@@ -146,7 +188,7 @@ class CalendarReader(object):
         """
         Return the message with a bit of header
         """
-        message, event_id = self.get_tomorrow_message
+        message, event_id = self.get_tomorrow_message()
         final_message = """
 Domani avrai queste lezioni:
 
@@ -221,6 +263,22 @@ class CalendarEvent(namedtuple("Event", ["name", "place", "start", "end", "descr
             return date
         else:
             return None
+
+    def get_event_dict(self):
+        return {
+            "name": self.name,
+            "place": self.place,
+            "start": self.start,
+            "end": self.end,
+            "description": self.description,
+            "id": self.id
+        }
+
+    @staticmethod
+    def from_dict(dict):
+        return CalendarEvent(name=dict['name'], place=dict['place'], start=dict['start'],
+                             end=dict['end'], description=dict['description'],
+                             id=dict['id'])
 
     @staticmethod
     def get_formatted_time(start_date, end_date):
