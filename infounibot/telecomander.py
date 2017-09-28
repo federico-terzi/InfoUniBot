@@ -44,5 +44,3 @@ def elimina_avviso(number):
 
 home_dir = os.path.expanduser('~')
 path = os.path.join(home_dir,'avvisi.txt')
-
-elimina_avviso(1)
