@@ -39,9 +39,7 @@ def show_avvisi(message):
     avvisi = tc.list_avvisi()
 
     for avviso in avvisi:
-        avviso=str(avviso).split(":")
-        text=text+("#{id}:*{titolo}*\n{avviso}").format(id=i,titolo=tc.formatta(avviso[0]).upper(),
-                                                        avviso=tc.formatta(avviso[1]))
+        text=text+("#{id}:*{titolo}*\n{avviso}").format(id=i,titolo=avviso['titolo'],avviso=avviso['testo'])
         i=i+1
 
     bot.send_message(message.chat.id,text,parse_mode='Markdown')
