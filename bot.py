@@ -66,16 +66,4 @@ def send_today(message):
 
 
 # Eseguo il polling, con recupero in caso di errore
-def telegram_polling():
-    print("Polling...")
-    try:
-        bot.polling(none_stop=True)
-    except Exception as e:
-        print(e)
-        bot.stop_polling()
-        time.sleep(5)
-        telegram_polling()
-
-
-if __name__ == '__main__':
-    telegram_polling()
+bot.polling(none_stop=True)
