@@ -48,16 +48,16 @@ def show_avvisi(message):
 @bot.message_handler(commands=['add','Add'])
 def inserisci_avviso(message):
     text = message.text # (?)
-    text = text.replace("/add ","")
-    text = text.replace("/Add", "")
+    text = text.strip()
+    text = text[4:]
     #if(message.chat.id == 0):#inseriremo i nostri ID manualmente , purtroppo
     tc.scriviAvviso(text)
 
 @bot.message_handler(commands=['rm','Rm'])
 def elimina_avviso(message):
     text = message.text
-    text = text.replace("/rm","")
-    text = text.replace("/Rm","")
+    text = text.strip()
+    text = text[3:4]
 
     #if(message.chat.id ==0):
     tc.elimina_avviso(int(text))
