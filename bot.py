@@ -39,22 +39,28 @@ def show_avvisi(message):
     avvisi = tc.list_avvisi()
     if(len(avvisi) != 0):
         for avviso in avvisi:
-            text=text+("#{id}:*{titolo}*\n{avviso}").format(id=i,titolo=avviso['titolo'],avviso=avviso['testo'])
+            text=text+("#{id}:*{titolo}*\n{avviso}\n\n").format(id=i,titolo=avviso['titolo'],avviso=avviso['testo'])
             i=i+1
     else:
         text=text+"*Non ci sono nuovi avvisi*"
     bot.send_message(message.chat.id,text,parse_mode='Markdown')
 
-@bot.message_handler(commands=['addA','AddA'])
+@bot.message_handler(commands=['add','Add'])
 def inserisci_avviso(message):
-    text = message.chat.text # (?)
-    if(message.chat.id == 0):#inseriremo i nostri ID manualmente , purtroppo
-        tc.scriviAvviso(text)
-@bot.message_handler(commands=['rmA','RmA'])
+    text = message.text # (?)
+    text = text.replace("/add ","")
+    text = text.replace("/Add", "")
+    #if(message.chat.id == 0):#inseriremo i nostri ID manualmente , purtroppo
+    tc.scriviAvviso(text)
+
+@bot.message_handler(commands=['rm','Rm'])
 def elimina_avviso(message):
-    text = int(message.chat.text)
-    if(message.chat.id ==0):
-        tc.elimina_avviso(text)
+    text = message.text
+    text = text.replace("/rm","")
+    text = text.replace("/Rm","")
+
+    #if(message.chat.id ==0):
+    tc.elimina_avviso(int(text))
 
 
 @bot.message_handler(commands=['start','Start'])
