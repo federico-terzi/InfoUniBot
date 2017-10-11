@@ -6,6 +6,7 @@ import time
 
 import infounibot.util as util
 import infounibot.google_cal as cal
+import infounibot.telecomander as tc
 from telebot import types
 
 # Get the bot token fron the enviromental variables
@@ -33,6 +34,36 @@ markup = types.ReplyKeyboardMarkup(row_width=2)
 itembtn1 = types.KeyboardButton('/domani')
 itembtn2 = types.KeyboardButton('/oggi')
 markup.add(itembtn1, itembtn2)
+
+@bot.message_handler(commands=['avvisi','Avvisi'])
+def show_avvisi(message):
+    text = 'AVVISI:\n'
+    i = 1
+    avvisi = tc.list_avvisi()
+    if(len(avvisi) != 0):
+        for avviso in avvisi:
+            text=text+("#{id}:*{titolo}*\n{avviso}\n\n").format(id=i,titolo=avviso['titolo'],avviso=avviso['testo'])
+            i=i+1
+    else:
+        text=text+"*Non ci sono nuovi avvisi*"
+    bot.send_message(message.chat.id,text,parse_mode='Markdown')
+
+@bot.message_handler(commands=['add','Add'])
+def inserisci_avviso(message):
+    text = message.text # (?)
+    text = text.strip()
+    text = text[4:]
+    #if(message.chat.id == 0):#inseriremo i nostri ID manualmente , purtroppo
+    tc.scriviAvviso(text)
+
+@bot.message_handler(commands=['rm','Rm'])
+def elimina_avviso(message):
+    text = message.text
+    text = text.strip()
+    text = text[3:4]
+
+    #if(message.chat.id ==0):
+    tc.elimina_avviso(int(text))
 
 
 @bot.message_handler(commands=['start','Start'])
